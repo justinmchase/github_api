@@ -1,0 +1,22 @@
+name: Checks
+
+on:
+  workflow_dispatch:
+  pull_requests:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: denoland/setup-deno@v1.1.0
+        with:
+          deno-version: v1.x
+
+      - run: deno --version
+      - run: deno fmt --check
+      - run: deno lint
+      # - run: deno test
