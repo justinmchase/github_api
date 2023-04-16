@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "std/": "https://deno.land/std@0.183.0/",
+    "jtd/": "https://deno.land/x/jtd@v0.1.0/"
+  },
+  "tasks": {}
+}

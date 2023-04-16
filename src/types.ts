@@ -10,6 +10,19 @@ export type GitHubOrg = {
   organization: string;
 };
 
+export enum GitHubOrder {
+  Descending = "desc",
+  Ascending = "asc",
+}
+
+export type PageOpts = {
+  perPage?: number;
+  page?: number;
+}
+export type Page = {
+  total_count: number;
+}
+
 export enum GitHubSecretVisibility {
   All = "all",
   Private = "private",
@@ -56,5 +69,5 @@ export type GitHubVariable =
 
 export type GitHubSelectedRepositoryVariable = {
   visibility: GitHubVariableVisibility.Selected;
-  selected_respositories_url: string;
+  selected_repositories_url: string;
 };

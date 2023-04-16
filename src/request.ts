@@ -1,4 +1,4 @@
-import { retry } from "../deps/async.ts";
+import { retry } from "std/async/mod.ts";
 import { GitHubApiError } from "./error.ts";
 import { GitHubCredentials } from "./types.ts";
 
