@@ -1,10 +1,10 @@
-import { githubRequestAll } from "../../request.ts";
+import { githubRequestAll } from "../../../request.ts";
 import {
   GitHubApi,
   GitHubCredentials,
   GitHubOrg,
   GitHubVariable,
-} from "../../types.ts";
+} from "../../../types/mod.ts";
 
 export async function githubOrgsActionsListVariables(
   opts: GitHubOrg & GitHubApi & GitHubCredentials,

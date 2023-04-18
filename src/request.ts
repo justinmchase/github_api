@@ -1,6 +1,6 @@
 import { retry } from "std/async/mod.ts";
 import { GitHubApiError } from "./error.ts";
-import { GitHubCredentials } from "./types.ts";
+import { GitHubCredentials } from "./types/mod.ts";
 
 type GitHubRequestAllOpts<T> = GitHubRequestOpts & {
   fn: (result: Record<string, unknown>) => T[];
@@ -11,6 +11,8 @@ type GitHubRequestOpts = GitHubCredentials & {
   version?: "2022-11-28";
   method?: "GET" | "POST" | "PUT" | "DELETE";
   accept?: string;
+  body?: unknown; // todo: Serializable
+  fetch?: typeof fetch;
 };
 
 export async function githubRequestAll<T>(
@@ -40,26 +42,33 @@ export async function githubRequest<T>(opts: GitHubRequestOpts): Promise<T> {
     accept = "application/vnd.github+json",
     version = "2022-11-28",
     accessToken,
+    body,
+    fetch: fn = fetch,
   } = opts;
 
   const res = await retry(async () =>
-    await fetch(url, {
+    await fn(url, {
       method,
       headers: {
         "Accept": accept,
         "X-GitHub-Api-Version": version,
         "Authorization": `Bearer ${accessToken}`,
       },
+      body: body ? JSON.stringify(body) : undefined,
     })
   );
   const { ok, status } = res;
-  const results = await res.json();
   if (!ok) {
-    console.log("ERR", { results });
     throw new GitHubApiError(
       url.toString(),
       status,
     );
   }
-  return results as T;
+
+  if (status === 204) {
+    return {} as T;
+  } else {
+    const results = await res.json();
+    return results as T;
+  }
 }
