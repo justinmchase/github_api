@@ -1,2 +1,2 @@
-export * from "./secrets.ts";
-export * from "./variables.ts";
+export * from "./secrets/mod.ts";
+export * from "./variables/mod.ts";

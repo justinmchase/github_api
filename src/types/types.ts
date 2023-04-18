@@ -1,5 +1,5 @@
 export type GitHubApi = {
-  endpoint?: string;
+  endpoint: string;
 };
 
 export type GitHubCredentials = {
@@ -18,10 +18,10 @@ export enum GitHubOrder {
 export type PageOpts = {
   perPage?: number;
   page?: number;
-}
+};
 export type Page = {
   total_count: number;
-}
+};
 
 export enum GitHubSecretVisibility {
   All = "all",
