@@ -9,14 +9,16 @@ export async function githubRateLimit(
   opts:
     & GitHubApi
     & GitHubCredentials,
-) {
+): Promise<GitHubRateLimit> {
   const { endpoint, accessToken } = opts;
   const url = new URL(
     `${endpoint}/rate_limit`,
   );
-  return await githubRequest<GitHubRateLimit>({
+  const { resources, rate: _deprecated } = await githubRequest<GitHubRateLimit & { rate: never }>({
     url,
     method: "GET",
     accessToken,
   });
+
+  return { resources }
 }
