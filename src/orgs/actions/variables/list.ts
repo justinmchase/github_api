@@ -1,19 +1,16 @@
-import { githubRequestAll } from "../../../request.ts";
+import { GitHubClient } from "../../../client.ts";
 import {
-  GitHubApi,
-  GitHubCredentials,
   GitHubOrg,
   GitHubVariable,
 } from "../../../types/mod.ts";
 
-export async function githubOrgsActionsListVariables(
-  opts: GitHubOrg & GitHubApi & GitHubCredentials,
+export async function githubOrgsActionsListVariables(opts:
+  & GitHubOrg
+  & { client: GitHubClient },
 ) {
-  const { endpoint, organization, accessToken } = opts;
-  const url = new URL(`${endpoint}/orgs/${organization}/actions/variables`);
-  return await githubRequestAll<GitHubVariable>({
-    url,
-    fn: ({ variables }) => variables as GitHubVariable[],
-    accessToken,
+  const { organization, client } = opts;
+  return await client.requestAll<GitHubVariable>({
+    api: `orgs/${organization}/actions/variables`,
+    map: ({ variables }) => variables as GitHubVariable[],
   });
 }

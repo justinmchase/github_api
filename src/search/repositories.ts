@@ -1,13 +1,11 @@
-import { githubRequest, githubRequestAll } from "../request.ts";
+import { GitHubClient } from "../client.ts";
 import {
-  GitHubApi,
-  GitHubCredentials,
   GitHubOrder,
   GitHubOrg,
   Page,
   PageOpts,
+  GitHubRepository,
 } from "../types/mod.ts";
-import { GitHubRepository } from "../types/repository.ts";
 
 export enum GitHubSearchRepositoriesSort {
   Stars = "stars",
@@ -31,18 +29,18 @@ export async function githubSearchRepositoriesAll(
   opts:
     & GitHubSearchRepositoriesOpts
     & GitHubOrg
-    & GitHubApi
-    & GitHubCredentials,
+    & { client: GitHubClient }
 ) {
-  const { q, sort, order, organization, endpoint, accessToken } = opts;
-  const url = new URL(`${endpoint}/search/repositories`);
-  url.searchParams.set("q", `${q} org:${organization}`);
-  if (sort) url.searchParams.set("sort", sort);
-  if (order) url.searchParams.set("order", order);
-  return await githubRequestAll<GitHubRepository>({
-    url,
-    fn: ({ items }) => items as GitHubRepository[],
-    accessToken,
+  const { q, sort, order, organization, client } = opts;
+  const parameters = new URLSearchParams([
+    ["q", `${q} org:${organization}`],
+    ...sort ? [["sort", sort]] : [],
+    ...order ? [["order", order]] : [],
+  ]);
+  return await client.requestAll<GitHubRepository>({
+    api: "search/repositories",
+    parameters,
+    map: ({ items }) => items as GitHubRepository[],
   });
 }
 
@@ -56,24 +54,20 @@ export async function githubSearchRepositories(
     & GitHubSearchRepositoriesOpts
     & PageOpts
     & GitHubOrg
-    & GitHubApi
-    & GitHubCredentials,
+    & { client: GitHubClient }
 ) {
-  const { q, sort, order, endpoint, accessToken, page, perPage } = opts;
-  const url = new URL(`${endpoint}/search/repositories`);
-  url.searchParams.set("q", q);
-  if (sort) url.searchParams.set("sort", sort);
-  if (order) url.searchParams.set("order", order);
-  if (page) url.searchParams.set("page", `${page + 1}`);
-  if (perPage) url.searchParams.set("per_page", `${perPage}`);
-  const { total_count, items } = await githubRequest<
+  const { q, sort, order, page, perPage, client } = opts;
+  const parameters = new URLSearchParams([
+    ["q", q],
+    ...sort ? [["sort", sort]] : [],
+    ...order ? [["order", order]] : [],
+    ...page ? [["page", `${page + 1}`]] : [],
+    ...perPage ? [["per_page", `${perPage}`]] : [],
+  ]);
+  return await client.request<
     Page & { incomplete_results: boolean; items: GitHubRepository[] }
   >({
-    url,
-    accessToken,
+    api: "search/repositories",
+    parameters,
   });
-  return {
-    total: total_count,
-    items,
-  };
 }
