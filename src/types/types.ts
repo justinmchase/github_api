@@ -1,10 +1,3 @@
-export type GitHubApi = {
-  endpoint: string;
-};
-
-export type GitHubCredentials = {
-  accessToken: string;
-};
 
 export type GitHubOrg = {
   organization: string;

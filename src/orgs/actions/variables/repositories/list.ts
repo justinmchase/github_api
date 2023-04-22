@@ -1,7 +1,5 @@
-import { githubRequestAll } from "../../../../request.ts";
+import { GitHubClient } from "../../../../client.ts";
 import {
-  GitHubApi,
-  GitHubCredentials,
   GitHubOrg,
   GitHubRepository,
   GitHubVariable,
@@ -12,21 +10,17 @@ export async function githubOrgsActionsVariableListRepositories(
   opts:
     & { variable: GitHubVariable }
     & GitHubOrg
-    & GitHubApi
-    & GitHubCredentials,
+    & { client: GitHubClient }
 ) {
-  const { variable, endpoint, organization, accessToken } = opts;
+  const { variable, organization, client } = opts;
   if (variable.visibility !== GitHubVariableVisibility.Selected) {
     throw new Error(
       `Organization variable must have visibility ${GitHubVariableVisibility.Selected} in order to have repositories associated with it`,
     );
   }
-  const url = new URL(
-    `${endpoint}/orgs/${organization}/actions/variables/${variable.name}/repositories`,
-  );
-  return await githubRequestAll<GitHubRepository>({
-    url,
-    fn: ({ repositories }) => repositories as GitHubRepository[],
-    accessToken,
+
+  return await client.requestAll<GitHubRepository>({
+    api: `orgs/${organization}/actions/variables/${variable.name}/repositories`,
+    map: ({ repositories }) => repositories as GitHubRepository[],
   });
 }

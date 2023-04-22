@@ -1,19 +1,16 @@
-import { githubRequestAll } from "../../../request.ts";
+import { GitHubClient } from "../../../client.ts";
 import {
-  GitHubApi,
-  GitHubCredentials,
   GitHubOrg,
   GitHubSecret,
 } from "../../../types/mod.ts";
 
-export async function githubOrgsActionsListSecrets(
-  opts: GitHubOrg & GitHubApi & GitHubCredentials,
+export async function githubOrgsActionsListSecrets(opts:
+  & GitHubOrg
+  & { client: GitHubClient }
 ) {
-  const { endpoint, organization, accessToken } = opts;
-  const url = new URL(`${endpoint}/orgs/${organization}/actions/secrets`);
-  return await githubRequestAll<GitHubSecret>({
-    url,
-    fn: ({ secrets }) => secrets as GitHubSecret[],
-    accessToken,
+  const { organization, client } = opts;
+  return await client.requestAll<GitHubSecret>({
+    api: `orgs/${organization}/actions/secrets`,
+    map: ({ secrets }) => secrets as GitHubSecret[],
   });
 }

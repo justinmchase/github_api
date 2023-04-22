@@ -4,3 +4,6 @@ export * from "./repository.ts";
 export * from "./user.ts";
 export * from "./types.ts";
 export * from "./rate.ts";
+export * from "./api.ts";
+export * from "./credentials.ts";
+export * from "./request.ts";

@@ -1,7 +1,5 @@
-import { githubRequest } from "../../../../request.ts";
+import { GitHubClient } from "../../../../client.ts";
 import {
-  GitHubApi,
-  GitHubCredentials,
   GitHubOrg,
   GitHubRepository,
   GitHubVariable,
@@ -10,26 +8,21 @@ import {
 
 export async function githubOrgsActionsVariableSetRepositories(
   opts:
-    & { variable: GitHubVariable; repositories: GitHubRepository[] }
+    & { variable: GitHubVariable; repositories: Pick<GitHubRepository, 'id'>[] }
     & GitHubOrg
-    & GitHubApi
-    & GitHubCredentials,
+    & { client: GitHubClient },
 ) {
-  const { variable, repositories, endpoint, organization, accessToken } = opts;
+  const { variable, repositories, organization, client } = opts;
   if (variable.visibility !== GitHubVariableVisibility.Selected) {
     throw new Error(
       `Organization variable must have visibility ${GitHubVariableVisibility.Selected} in order to have repositories associated with it`,
     );
   }
-  const url = new URL(
-    `${endpoint}/orgs/${organization}/actions/variables/${variable.name}/repositories`,
-  );
-  return await githubRequest({
-    url,
+  return await client.request({
+    api: `orgs/${organization}/actions/variables/${variable.name}/repositories`,
     method: "PUT",
     body: {
       selected_repository_ids: repositories.map((r) => r.id),
     },
-    accessToken,
   });
 }
