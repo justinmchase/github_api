@@ -136,8 +136,7 @@ export class GitHubClient {
     // we need to round up to the next second to avoid being just inside the
     // rate limit boundary
     const now = Date.now();
-    return now - (now % 1000) + 1000
-
+    return now - (now % 1000) + 1000;
   }
 
   private async throttle(
@@ -156,18 +155,18 @@ export class GitHubClient {
 
     const after = this.now();
     const { status, headers } = response;
-    const limit = headers.get("x-ratelimit-limit")
-    const remaining = headers.get("x-ratelimit-remaining")
-    const reset = headers.get("x-ratelimit-reset")
-    const resource = headers.get("x-ratelimit-resource")
-    const used = headers.get("x-ratelimit-used")
+    const limit = headers.get("x-ratelimit-limit");
+    const remaining = headers.get("x-ratelimit-remaining");
+    const reset = headers.get("x-ratelimit-reset");
+    const resource = headers.get("x-ratelimit-resource");
+    const used = headers.get("x-ratelimit-used");
     this.logger.debug(`ratelimit`, {
       limit,
       remaining,
       reset,
       resource,
-      used
-    })
+      used,
+    });
 
     // Handle throttle headers...
     // If this is provided then utilize it.

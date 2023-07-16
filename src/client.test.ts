@@ -1,126 +1,122 @@
-import {
-  assertEquals,
-} from "std/testing/asserts.ts";
-import { FakeTime } from "std/testing/time.ts";
-
-import { GitHubClient } from "./mod.ts"
+import { assertEquals } from "std/testing/asserts.ts";
+import { GitHubClient } from "./mod.ts";
 
 Deno.test({
   name: "fetch",
   fn: async (t) => {
     await t.step({
-      name: '200',
+      name: "200",
       fn: async () => {
         const fn = async () => {
-          const res = new Response("{}", { status: 200 })
-          return await res
-        }
-        const client = new GitHubClient({ accessToken: 'test' })
+          const res = new Response("{}", { status: 200 });
+          return await res;
+        };
+        const client = new GitHubClient({ accessToken: "test" });
         const data = await client.request({
-          api: 'test',
-          fetch: fn
+          api: "test",
+          fetch: fn,
         });
 
-        assertEquals(data, {})
-      }
+        assertEquals(data, {});
+      },
     });
 
     await t.step({
-      name: '400 once',
+      name: "400 once",
       fn: async () => {
         let retry = 0;
         const fn = async () => {
-          const body = `{"retry":${retry}}`
+          const body = `{"retry":${retry}}`;
           switch (retry++) {
             case 0:
-              return await new Response(body, { status: 400 })
+              return await new Response(body, { status: 400 });
             default:
-              return await new Response(body, { status: 200 })
+              return await new Response(body, { status: 200 });
           }
-        }
-        const client = new GitHubClient({ accessToken: 'test' })
+        };
+        const client = new GitHubClient({ accessToken: "test" });
         const data = await client.request({
-          api: 'test',
-          fetch: fn
+          api: "test",
+          fetch: fn,
         });
 
-        assertEquals(data, { retry: 1 })
-      }
+        assertEquals(data, { retry: 1 });
+      },
     });
     await t.step({
-      name: '400 twice',
+      name: "400 twice",
       fn: async () => {
         let retry = 0;
         const fn = async () => {
-          const body = `{"retry":${retry}}`
+          const body = `{"retry":${retry}}`;
           switch (retry++) {
             case 0:
-              return await new Response(body, { status: 400 })
+              return await new Response(body, { status: 400 });
             case 1:
-              return await new Response(body, { status: 400 })
+              return await new Response(body, { status: 400 });
             default:
-              return await new Response(body, { status: 200 })
+              return await new Response(body, { status: 200 });
           }
-        }
-        const client = new GitHubClient({ accessToken: 'test' })
+        };
+        const client = new GitHubClient({ accessToken: "test" });
         const data = await client.request({
-          api: 'test',
-          fetch: fn
+          api: "test",
+          fetch: fn,
         });
 
-        assertEquals(data, { retry: 2 })
-      }
+        assertEquals(data, { retry: 2 });
+      },
     });
 
     await t.step({
-      name: '403 retry-after',
+      name: "403 retry-after",
       fn: async () => {
         let retry = 0;
         const fn = async () => {
-          const body = `{"retry":${retry}}`
+          const body = `{"retry":${retry}}`;
           switch (retry++) {
             case 0:
               return await new Response(body, {
                 status: 403,
                 headers: { "retry-after": "2" },
-              })
+              });
             default:
-              return await new Response(body, { status: 200 })
+              return await new Response(body, { status: 200 });
           }
-        }
-        const client = new GitHubClient({ accessToken: 'test' })
+        };
+        const client = new GitHubClient({ accessToken: "test" });
         const data = await client.request({
-          api: 'test',
-          fetch: fn
+          api: "test",
+          fetch: fn,
         });
 
-        assertEquals(data, { retry: 1 })
-      }
+        assertEquals(data, { retry: 1 });
+      },
     });
     await t.step({
-      name: '403 secondary limit',
+      name: "403 secondary limit",
       fn: async () => {
         let retry = 0;
         const fn = async () => {
-          const body = `{"retry":${retry}}`
+          const body = `{"retry":${retry}}`;
           switch (retry++) {
             case 0:
               return await new Response(body, {
                 status: 403,
-                headers: { "x-ratelimit-reset": `${Date.now() + 2000}` },
-              })
+                headers: { "x-ratelimit-reset": `${((Date.now() / 1000) + 2).toFixed(0)}` },
+              });
             default:
-              return await new Response(body, { status: 200 })
+              return await new Response(body, { status: 200 });
           }
-        }
-        const client = new GitHubClient({ accessToken: 'test' })
+        };
+        const client = new GitHubClient({ accessToken: "test" });
         const data = await client.request({
-          api: 'test',
-          fetch: fn
+          api: "test",
+          fetch: fn,
         });
 
-        assertEquals(data, { retry: 1 })
-      }
+        assertEquals(data, { retry: 1 });
+      },
     });
-  }
-})
+  },
+});
