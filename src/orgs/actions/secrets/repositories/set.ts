@@ -8,9 +8,9 @@ import {
 
 export async function githubOrgsActionsSecretSetRepositories(
   opts:
-    & { secret: GitHubSecret; repositories: Pick<GitHubRepository, 'id'>[] }
+    & { secret: GitHubSecret; repositories: Pick<GitHubRepository, "id">[] }
     & GitHubOrg
-    & { client: GitHubClient }
+    & { client: GitHubClient },
 ) {
   const { secret, repositories, organization, client } = opts;
   if (secret.visibility !== GitHubSecretVisibility.Selected) {

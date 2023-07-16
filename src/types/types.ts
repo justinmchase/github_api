@@ -1,3 +1,6 @@
+export type GitHubOwner = {
+  owner: string;
+};
 
 export type GitHubOrg = {
   organization: string;

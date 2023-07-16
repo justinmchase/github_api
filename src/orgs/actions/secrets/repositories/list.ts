@@ -6,10 +6,11 @@ import {
   GitHubSecretVisibility,
 } from "../../../../types/mod.ts";
 
-export async function githubOrgsActionsSecretListRepositories(opts:
-  & { secret: GitHubSecret }
-  & GitHubOrg
-  & { client: GitHubClient }
+export async function githubOrgsActionsSecretListRepositories(
+  opts:
+    & { secret: GitHubSecret }
+    & GitHubOrg
+    & { client: GitHubClient },
 ) {
   const { secret, organization, client } = opts;
   if (secret.visibility !== GitHubSecretVisibility.Selected) {

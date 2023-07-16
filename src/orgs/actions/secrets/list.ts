@@ -1,12 +1,10 @@
 import { GitHubClient } from "../../../client.ts";
-import {
-  GitHubOrg,
-  GitHubSecret,
-} from "../../../types/mod.ts";
+import { GitHubOrg, GitHubSecret } from "../../../types/mod.ts";
 
-export async function githubOrgsActionsListSecrets(opts:
-  & GitHubOrg
-  & { client: GitHubClient }
+export async function githubOrgsActionsListSecrets(
+  opts:
+    & GitHubOrg
+    & { client: GitHubClient },
 ) {
   const { organization, client } = opts;
   return await client.requestAll<GitHubSecret>({
