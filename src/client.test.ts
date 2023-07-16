@@ -103,7 +103,11 @@ Deno.test({
             case 0:
               return await new Response(body, {
                 status: 403,
-                headers: { "x-ratelimit-reset": `${((Date.now() / 1000) + 2).toFixed(0)}` },
+                headers: {
+                  "x-ratelimit-reset": `${
+                    ((Date.now() / 1000) + 2).toFixed(0)
+                  }`,
+                },
               });
             default:
               return await new Response(body, { status: 200 });
