@@ -4,3 +4,4 @@ export * from "./orgs/mod.ts";
 export * from "./rate.ts";
 export * from "./search/mod.ts";
 export * from "./types/mod.ts";
+export * from "./repos/mod.ts";

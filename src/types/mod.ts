@@ -7,3 +7,5 @@ export * from "./rate.ts";
 export * from "./api.ts";
 export * from "./credentials.ts";
 export * from "./request.ts";
+export * from "./reactions.ts";
+export * from "./comment.ts";

@@ -8,7 +8,7 @@ import {
 
 export async function githubOrgsActionsVariableSetRepositories(
   opts:
-    & { variable: GitHubVariable; repositories: Pick<GitHubRepository, 'id'>[] }
+    & { variable: GitHubVariable; repositories: Pick<GitHubRepository, "id">[] }
     & GitHubOrg
     & { client: GitHubClient },
 ) {

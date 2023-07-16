@@ -2,9 +2,9 @@ import { GitHubClient } from "../client.ts";
 import {
   GitHubOrder,
   GitHubOrg,
+  GitHubRepository,
   Page,
   PageOpts,
-  GitHubRepository,
 } from "../types/mod.ts";
 
 export enum GitHubSearchRepositoriesSort {
@@ -29,7 +29,7 @@ export async function githubSearchRepositoriesAll(
   opts:
     & GitHubSearchRepositoriesOpts
     & GitHubOrg
-    & { client: GitHubClient }
+    & { client: GitHubClient },
 ) {
   const { q, sort, order, organization, client } = opts;
   const parameters = new URLSearchParams([
@@ -54,7 +54,7 @@ export async function githubSearchRepositories(
     & GitHubSearchRepositoriesOpts
     & PageOpts
     & GitHubOrg
-    & { client: GitHubClient }
+    & { client: GitHubClient },
 ) {
   const { q, sort, order, page, perPage, client } = opts;
   const parameters = new URLSearchParams([

@@ -10,7 +10,7 @@ export async function githubOrgsActionsVariableListRepositories(
   opts:
     & { variable: GitHubVariable }
     & GitHubOrg
-    & { client: GitHubClient }
+    & { client: GitHubClient },
 ) {
   const { variable, organization, client } = opts;
   if (variable.visibility !== GitHubVariableVisibility.Selected) {
