@@ -1,4 +1,4 @@
-import { Serializable } from "serializable/mod.ts";
+import type { Serializable } from "serializable/mod.ts";
 
 export type GitHubRequest = {
   api: string;

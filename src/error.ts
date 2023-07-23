@@ -1,4 +1,4 @@
-import { Serializable } from "serializable/mod.ts";
+import type { Serializable } from "serializable/mod.ts";
 
 export class GitHubApiError extends Error {
   constructor(
@@ -7,5 +7,6 @@ export class GitHubApiError extends Error {
     public readonly body: Serializable,
   ) {
     super(`Error calling github api [${status}] ${url}`);
+    this.name = "GitHubApiError";
   }
 }
