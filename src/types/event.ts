@@ -1,14 +1,14 @@
 import { GitHubInstallationEvent } from "./installation.ts";
+import { GitHubOrganization } from "./organization.ts";
 import { GitHubPingEvent } from "./ping.ts";
 import { GitHubRepository } from "./repository.ts";
-import { GitHubOrg } from "./types.ts";
 import { GitHubUser } from "./user.ts";
 
 export type GitHubEventCommon = {
   action?: string;
   sender?: GitHubUser;
   repository?: GitHubRepository;
-  organization?: GitHubOrg;
+  organization?: GitHubOrganization;
 };
 
 export type GitHubEvent =
