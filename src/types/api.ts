@@ -1,4 +1,4 @@
 export type GitHubApi = {
   version?: "2022-11-28";
-  endpoint?: string;
+  endpoint?: "https://api.github.com" | string;
 };

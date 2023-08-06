@@ -11,7 +11,7 @@ export async function githubReposCommitsCommentsCreate(
   const { body, path, position, line, commitSha, repository, owner, client } =
     opts;
   return await client.request<GitHubCommitComment>({
-    api: `repos/${owner}/${repository}/commits/variables/${commitSha}/comments`,
+    api: `repos/${owner}/${repository}/commits/${commitSha}/comments`,
     method: "POST",
     body: {
       body,
