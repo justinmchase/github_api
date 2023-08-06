@@ -1,1 +1,4 @@
-export * from "./workflows/mod.ts";
+import { workflows } from "./workflows/mod.ts";
+export const actions = {
+  workflows,
+};

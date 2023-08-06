@@ -25,7 +25,7 @@ type GitHubSearchRepositoriesOpts = {
  * @param opts The options for this query
  * @returns All repositories matching the query
  */
-export async function githubSearchRepositoriesAll(
+export async function repositories(
   opts:
     & GitHubSearchRepositoriesOpts
     & GitHubOrg

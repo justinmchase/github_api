@@ -3,7 +3,7 @@ import { GitHubOrg, GitHubRepository } from "../../types/mod.ts";
 
 type RepositoryMap<T> = (repos: GitHubRepository[]) => T[];
 
-export async function githubOrgsListRepos<T>(
+export async function list<T>(
   opts:
     & { map?: RepositoryMap<T> }
     & GitHubOrg

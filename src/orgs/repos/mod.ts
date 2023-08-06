@@ -1,1 +1,4 @@
-export * from "./list.ts";
+import { list } from "./list.ts";
+export const repos = {
+  list,
+};

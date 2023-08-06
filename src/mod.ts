@@ -1,7 +1,13 @@
 export * from "./client.ts";
 export * from "./error.ts";
-export * from "./orgs/mod.ts";
 export * from "./rate.ts";
-export * from "./search/mod.ts";
 export * from "./types/mod.ts";
-export * from "./repos/mod.ts";
+
+import { orgs } from "./orgs/mod.ts";
+import { repos } from "./repos/mod.ts";
+import { search } from "./search/mod.ts";
+export const api = {
+  orgs,
+  repos,
+  search,
+};

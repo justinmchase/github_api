@@ -1,7 +1,7 @@
 import { GitHubClient } from "../../../client.ts";
 import { GitHubOrg, GitHubSecret } from "../../../types/mod.ts";
 
-export async function githubOrgsActionsListSecrets(
+export async function list(
   opts:
     & GitHubOrg
     & { client: GitHubClient },

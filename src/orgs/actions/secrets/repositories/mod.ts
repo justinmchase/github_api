@@ -1,2 +1,6 @@
-export * from "./list.ts";
-export * from "./set.ts";
+import { list } from "./list.ts";
+import { set } from "./set.ts";
+export const repositories = {
+  list,
+  set,
+};
