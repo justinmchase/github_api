@@ -79,6 +79,8 @@
     "https://deno.land/std@0.195.0/testing/asserts.ts": "4da3dca17ff6b852e4e689f7e42562c24c3ee182cc55ff04852811e321538c24",
     "https://deno.land/x/serializable@0.1.0/mod.ts": "f78da632a24245d1a0ca2bdcb9b1ff747bc167e2a284354583b46b27c44a6ac3",
     "https://deno.land/x/serializable@0.3.1/mod.ts": "462bdae42dc7ce0b713612251c490db56f4b92987c38d1bcd8886b832bb93a81",
+    "https://deno.land/x/serializable@0.3.4/deps/type.ts": "ea8a2d37bf2da033bdface7754b5aa0d25d0de8eaab199932044427e48331999",
+    "https://deno.land/x/serializable@0.3.4/mod.ts": "9bbcea2026d138036bd7501d5400f2df9833674c021049e3a9da2cff58316ead",
     "https://deno.land/x/type@0.2.0/mod.ts": "9473507398048cb24dbb37b3a220777106c69c28d573898648deb2bb84a7e131",
     "https://deno.land/x/type@0.2.0/src/array.ts": "7993e700794794138db48f418b1e8ec8926a400c6e4ec5af34cbc69b428fff32",
     "https://deno.land/x/type@0.2.0/src/bigint.ts": "d6c7289df37329560df8969ccac4b409862152635d63a491597ac02bac9edcf3",

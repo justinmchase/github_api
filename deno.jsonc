@@ -1,8 +1,5 @@
 {
-  "imports": {
-    "std/": "https://deno.land/std@0.195.0/",
-    "type/": "https://deno.land/x/type@0.2.0/",
-    "serializable/": "https://deno.land/x/serializable@0.3.1/"
-  },
-  "tasks": {}
+  "tasks": {
+    "check": "deno fmt && deno lint && deno test"
+  }
 }

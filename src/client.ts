@@ -1,6 +1,4 @@
-import * as log from "std/log/mod.ts";
-import { retry } from "std/async/mod.ts";
-import { delay } from "std/async/delay.ts";
+import { async, log } from "../deps/std.ts";
 import {
   GitHubApi,
   GitHubCredentials,
@@ -109,7 +107,7 @@ export class GitHubClient {
   private async retry(fn: Next) {
     let i = 0;
     let lastStatus = 0;
-    return await retry(async () => {
+    return await async.retry(async () => {
       if (i > 0) {
         this.logger.debug(`[${lastStatus}] retry (${i})...`, {
           status: lastStatus,
@@ -148,7 +146,7 @@ export class GitHubClient {
       if (ms > 1000) {
         this.logger.debug(`throttling for ${(ms / 1000).toFixed(0)}s...`);
       }
-      await delay(ms);
+      await async.delay(ms);
     }
 
     const response = await fn();
