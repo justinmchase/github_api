@@ -9,3 +9,7 @@ export * from "./credentials.ts";
 export * from "./request.ts";
 export * from "./reactions.ts";
 export * from "./comment.ts";
+export * from "./account.ts";
+export * from "./event.ts";
+export * from "./installation.ts";
+export * from "./ping.ts";
