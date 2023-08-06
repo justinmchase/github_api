@@ -1,3 +1,4 @@
+import { GitHubDeploymentProtectionRuleEvent } from "./deployment.ts";
 import { GitHubInstallationEvent } from "./installation.ts";
 import { GitHubOrganization } from "./organization.ts";
 import { GitHubPingEvent } from "./ping.ts";
@@ -17,12 +18,14 @@ export type GitHubEventName =
   | "discussion_comment"
   | "fork"
   | "gollum"
+  | "installation"
   | "issues"
   | "issue_comment"
   | "label"
   | "merge_group"
   | "milestone"
   | "page_build"
+  | "ping"
   | "project"
   | "project_card"
   | "project_column"
@@ -38,8 +41,7 @@ export type GitHubEventName =
   | "status"
   | "watch"
   | "workflow_dispatch"
-  | "workflow_run"
-  ;
+  | "workflow_run";
 
 export type GitHubEventCommon = {
   action?: string;
@@ -53,4 +55,5 @@ export type GitHubEvent =
   & (
     | GitHubPingEvent
     | GitHubInstallationEvent
+    | GitHubDeploymentProtectionRuleEvent
   );
