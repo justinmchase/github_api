@@ -1,3 +1,4 @@
+import { GitHubEventName } from "./event.ts";
 import { GitHubOrganization } from "./organization.ts";
 import { GitHubInstallationPermissions } from "./permissions.ts";
 import { GitHubRepository } from "./repository.ts";
@@ -25,7 +26,7 @@ export interface GitHubInstallation {
   html_url: string;
   app_slug: string;
   permissions: GitHubInstallationPermissions;
-  events: string[];
+  events: GitHubEventName[];
   created_at: string;
   updated_at: string;
   single_file_name: string | null;

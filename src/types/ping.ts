@@ -1,10 +1,12 @@
+import { GitHubEventName } from "./event.ts";
+
 export type GitHubHook = {
   type: "App" | string;
   id: number;
   app_id?: number;
   name: "web";
   active: boolean;
-  events: ("push")[];
+  events: GitHubEventName[];
   config: {
     content_type: "json" | "form";
     insecure_ssl: "0" | "1";

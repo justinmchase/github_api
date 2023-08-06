@@ -1,6 +1,20 @@
 export type GitHubPermission = "read" | "write";
 export type GitHubInstallationPermissions = {
+  actions: GitHubPermission;
+  administration: GitHubPermission;
+  checks: GitHubPermission;
   contents: GitHubPermission;
-  metadata: GitHubPermission;
   deployments: GitHubPermission;
+  discussions: GitHubPermission;
+  issues: GitHubPermission;
+  merge_queues: GitHubPermission;
+  metadata: GitHubPermission;
+  packages: GitHubPermission;
+  pages: GitHubPermission;
+  pull_requests: GitHubPermission;
+  repository_hooks: GitHubPermission;
+  repository_projects: GitHubPermission;
+  security_events: GitHubPermission;
+  statuses: GitHubPermission;
+  vulnerability_alerts: GitHubPermission;
 };
