@@ -54,7 +54,7 @@ export class GitHubClient {
       // the array of results. The caller of this api should
       // provide a map function in the latter case which maps the
       // result object to an T[]
-      const items = map?.(result) ?? result as T[];
+      const items = map?.(result) ?? result as T[] ?? [] as T[];
       results.push(...items);
       page += 1;
 

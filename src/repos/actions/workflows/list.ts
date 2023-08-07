@@ -2,17 +2,14 @@ import { GitHubClient } from "../../../client.ts";
 import { GitHubRepository } from "../../../mod.ts";
 import { GitHubWorkflow } from "../../../types/mod.ts";
 
-type WorkflowMap<T> = (repos: GitHubWorkflow[]) => T[];
-
-export async function list<T>(
+export async function list(
   opts:
-    & { map?: WorkflowMap<T> }
     & { repository: GitHubRepository }
     & { client: GitHubClient },
 ) {
-  const { map, repository: { name, owner: { login } }, client } = opts;
-  return await client.requestAll<T>({
+  const { repository: { name, owner: { login } }, client } = opts;
+  return await client.requestAll({
     api: `repos/${login}/${name}/actions/workflows`,
-    map,
+    map: ({ workflows }) => workflows as GitHubWorkflow[],
   });
 }
