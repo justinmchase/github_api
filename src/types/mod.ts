@@ -2,6 +2,7 @@ export * from "./account.ts";
 export * from "./api.ts";
 export * from "./app.ts";
 export * from "./comment.ts";
+export * from "./content.ts";
 export * from "./credentials.ts";
 export * from "./date.ts";
 export * from "./deployment.ts";
