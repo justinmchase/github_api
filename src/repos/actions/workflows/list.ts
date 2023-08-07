@@ -12,7 +12,7 @@ export async function list<T>(
 ) {
   const { map, repository: { name, owner: { login } }, client } = opts;
   return await client.requestAll<T>({
-    api: `/repos/${login}/${name}/actions/workflows`,
+    api: `repos/${login}/${name}/actions/workflows`,
     map,
   });
 }

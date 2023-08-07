@@ -1,9 +1,6 @@
 import { SerializableRecord } from "../../../../../deps/serializable.ts";
 import { GitHubClient } from "../../../../client.ts";
-import {
-  GitHubCommitComment,
-  GitHubRepository,
-} from "../../../../types/mod.ts";
+import { GitHubRepository } from "../../../../types/mod.ts";
 
 export async function create(
   opts:
@@ -24,7 +21,7 @@ export async function create(
   } = opts;
   const api =
     `repos/${login}/${name}/actions/workflows/${workflowId}/dispatches`;
-  return await client.request<GitHubCommitComment>({
+  return await client.request<void>({
     api,
     method: "POST",
     body: {
