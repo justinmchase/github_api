@@ -7,7 +7,6 @@ type WorkflowMap<T> = (repos: GitHubWorkflow[]) => T[];
 export async function list<T>(
   opts:
     & { map?: WorkflowMap<T> }
-    & GitHubRepository
     & { repository: GitHubRepository }
     & { client: GitHubClient },
 ) {
