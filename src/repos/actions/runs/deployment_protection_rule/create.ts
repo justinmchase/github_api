@@ -6,8 +6,8 @@ export async function create(
     & {
       runId: number;
       environmentName: string;
-      state?: "approved" | "rejected"
-      comment: string
+      state?: "approved" | "rejected";
+      comment: string;
     }
     & { repository: GitHubRepository }
     & { client: GitHubClient },

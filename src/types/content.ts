@@ -1,22 +1,20 @@
-export type GitHubContentType = 
+export type GitHubContentType =
   | "dir"
   | "file"
   | "submodule"
-  | "symlink"
-  ;
+  | "symlink";
 
-export type GitHubContent = 
+export type GitHubContent =
   | GitHubFileContent[]
-  | GitHubFileContent
-  ;
+  | GitHubFileContent;
 
 export type GitHubFileContent = {
-  type: GitHubContentType
+  type: GitHubContentType;
   encoding: "base64" | string;
-  size: number
-  name: string
-  path: string
-  target?: string
+  size: number;
+  name: string;
+  path: string;
+  target?: string;
   content: string;
   sha: string;
   url: string;
@@ -28,5 +26,5 @@ export type GitHubFileContent = {
     git: string;
     self: string;
     html: string;
-  }
-}
+  };
+};
