@@ -1,17 +1,24 @@
 import { GitHubClient } from "../../../client.ts";
-import { GitHubCommitComment, GitHubOwner } from "../../../types/mod.ts";
+import { GitHubCommitComment, GitHubRepository } from "../../../types/mod.ts";
 
-export async function githubReposCommitsCommentsCreate(
+export async function create(
   opts:
-    & { repository: string; commitSha: string }
+    & { commitSha: string }
     & { body: string; path?: string; position?: number; line?: number }
-    & GitHubOwner
+    & { repository: GitHubRepository }
     & { client: GitHubClient },
 ) {
-  const { body, path, position, line, commitSha, repository, owner, client } =
-    opts;
+  const {
+    body,
+    path,
+    position,
+    line,
+    commitSha,
+    repository: { name, owner: { login } },
+    client,
+  } = opts;
   return await client.request<GitHubCommitComment>({
-    api: `repos/${owner}/${repository}/commits/${commitSha}/comments`,
+    api: `repos/${login}/${name}/commits/${commitSha}/comments`,
     method: "POST",
     body: {
       body,

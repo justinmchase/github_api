@@ -1,7 +1,7 @@
 import { GitHubClient } from "../../../client.ts";
 import { GitHubOrg, GitHubVariable } from "../../../types/mod.ts";
 
-export async function githubOrgsActionsListVariables(
+export async function list(
   opts:
     & GitHubOrg
     & { client: GitHubClient },

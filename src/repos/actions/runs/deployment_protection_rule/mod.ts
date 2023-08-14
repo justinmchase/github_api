@@ -1,4 +1,4 @@
 import { create } from "./create.ts";
-export const comments = {
+export const deployment_protection_rule = {
   create,
 };

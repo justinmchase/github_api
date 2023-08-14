@@ -6,7 +6,7 @@ import {
   GitHubVariableVisibility,
 } from "../../../../types/mod.ts";
 
-export async function githubOrgsActionsVariableSetRepositories(
+export async function set(
   opts:
     & { variable: GitHubVariable; repositories: Pick<GitHubRepository, "id">[] }
     & GitHubOrg

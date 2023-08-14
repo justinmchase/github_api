@@ -6,7 +6,7 @@ import {
   GitHubSecretVisibility,
 } from "../../../../types/mod.ts";
 
-export async function githubOrgsActionsSecretListRepositories(
+export async function list(
   opts:
     & { secret: GitHubSecret }
     & GitHubOrg

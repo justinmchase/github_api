@@ -1,2 +1,6 @@
-export * from "./secrets/mod.ts";
-export * from "./variables/mod.ts";
+import { secrets } from "./secrets/mod.ts";
+import { variables } from "./variables/mod.ts";
+export const actions = {
+  secrets,
+  variables,
+};
