@@ -26,9 +26,9 @@ export class GitHubClient {
   public async requestAll<T>(
     opts: GitHubRequestAll<T>,
   ): Promise<T[]> {
-    const { map } = opts;
+    const { max, map } = opts;
     const results: T[] = [];
-    const perPage = 100;
+    const perPage = max !== undefined ? Math.min(max, 50) : 50;
     const parameters = new URLSearchParams(opts.parameters ?? []);
     let page = 0;
     let total = Number.NaN;
@@ -64,6 +64,12 @@ export class GitHubClient {
       if (items.length < perPage) {
         break;
       }
+
+      // If a maximum is specified then we should stop when we reach it
+      if (max !== undefined && items.length >= max) {
+        break;
+      }
+
     } while (Number.isNaN(total) || (page * perPage) < total);
 
     return results;
@@ -97,7 +103,7 @@ export class GitHubClient {
     );
     const { status } = res;
     this.logger.debug(`[${status}] ${url}`, { url, status });
-    if (status === 204) {
+    if ([204, 205].includes(status)) {
       return {} as T;
     } else {
       return await res.json() as T;
