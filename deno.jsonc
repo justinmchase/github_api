@@ -1,6 +1,6 @@
 {
   "name": "@justinmchase/github-api",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "exports": "./mod.ts",
   "tasks": {
     "check": "deno fmt && deno lint && deno test"
