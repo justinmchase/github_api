@@ -10,6 +10,6 @@ export async function list(
   const { ref, repository: { name, owner: { login } }, client } = opts;
   return await client.requestAll({
     api: `repos/${login}/${name}/commits/${ref}/check-runs`,
-    map: ({ workflows }) => workflows as GitHubCheckRun[],
+    map: ({ check_runs }) => check_runs as GitHubCheckRun[],
   });
 }
