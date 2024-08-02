@@ -1,4 +1,4 @@
-import { testing } from "../../deps/std.ts";
+import { assertEquals } from "@std/assert";
 import type { GitHubDate } from "./date.ts";
 import { githubFormatDate } from "./date.ts";
 
@@ -25,7 +25,7 @@ Deno.test({
         name: expected,
         fn: () => {
           const actual = githubFormatDate(d);
-          testing.assertEquals(actual, expected);
+          assertEquals(actual, expected);
         },
       });
     }

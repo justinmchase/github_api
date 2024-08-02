@@ -1,7 +1,5 @@
-import { testing } from "../deps/std.ts";
+import { assertEquals } from "@std/assert";
 import { GitHubClient } from "./mod.ts";
-
-const { assertEquals } = testing;
 
 Deno.test({
   name: "fetch",

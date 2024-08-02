@@ -1,4 +1,6 @@
-import { async, log } from "../deps/std.ts";
+import { delay, retry } from "@std/async";
+import type { Logger } from "@std/log";
+import { getLogger } from "@std/log";
 import type {
   GitHubApi,
   GitHubCredentials,
@@ -14,13 +16,13 @@ export class GitHubClient {
   private readonly endpoint: string;
   private readonly version: string;
   private readonly accessToken: string;
-  private readonly logger: log.Logger;
+  private readonly logger: Logger;
   constructor(opts: GitHubApi & GitHubCredentials) {
     const { accessToken, endpoint, version } = opts;
     this.endpoint = endpoint ?? "https://api.github.com";
     this.version = version ?? "2022-11-28";
     this.accessToken = accessToken;
-    this.logger = log.getLogger("github");
+    this.logger = getLogger("github");
   }
 
   public async requestAll<T>(
@@ -86,7 +88,7 @@ export class GitHubClient {
     } = opts;
     const url = new URL(`${this.endpoint}/${api}`);
     if (parameters) parameters.forEach((v, k) => url.searchParams.set(k, v));
-    const res = await this.retry(async () =>
+    const res = await this.withRetry(async () =>
       await this.throttle(async () =>
         await fn(url, {
           method,
@@ -109,10 +111,10 @@ export class GitHubClient {
     }
   }
 
-  private async retry(fn: Next) {
+  private async withRetry(fn: Next) {
     let i = 0;
     let lastStatus = 0;
-    return await async.retry(async () => {
+    return await retry(async () => {
       if (i > 0) {
         this.logger.debug(`[${lastStatus}] retry (${i})...`, {
           status: lastStatus,
@@ -151,7 +153,7 @@ export class GitHubClient {
       if (ms > 1000) {
         this.logger.debug(`throttling for ${(ms / 1000).toFixed(0)}s...`);
       }
-      await async.delay(ms);
+      await delay(ms);
     }
 
     const response = await fn();

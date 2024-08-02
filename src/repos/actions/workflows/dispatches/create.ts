@@ -1,4 +1,4 @@
-import type { SerializableRecord } from "../../../../../deps/serializable.ts";
+import type { SerializableRecord } from "@justinmchase/serializable";
 import type { GitHubClient } from "../../../../client.ts";
 import type { GitHubRepository } from "../../../../types/mod.ts";
 
