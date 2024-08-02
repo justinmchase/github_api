@@ -55,8 +55,8 @@ jobs:
           EOF
 
           gh auth setup-git
-          git config --global user.name  "github-actions[bot]"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name  "justinmchase"
+          git config --global user.email "justin.m.chase@gmail.com"
 
           git add .
           git commit -m '${{ needs.draft-release.outputs.resolved_version }}[no ci]'
