@@ -11,7 +11,14 @@ export type GitHubCheckRun = {
   html_url: string;
   details_url: string;
   status: string;
-  conclusion: "success" | "failure" | "neutral" | "cancelled" | "skipped" | "timed_out" | "action_required";
+  conclusion:
+    | "success"
+    | "failure"
+    | "neutral"
+    | "cancelled"
+    | "skipped"
+    | "timed_out"
+    | "action_required";
   started_at: DateTimeString;
   completed_at: DateTimeString;
   output: {

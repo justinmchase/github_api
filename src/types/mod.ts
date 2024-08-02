@@ -10,6 +10,7 @@ export * from "./date.ts";
 export * from "./deployment.ts";
 export * from "./event.ts";
 export * from "./installation.ts";
+export * from "./issueComment.ts";
 export * from "./label.ts";
 export * from "./license.ts";
 export * from "./milestone.ts";
