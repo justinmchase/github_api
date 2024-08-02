@@ -1,3 +1,3 @@
 export type GitHubLink = {
-  href: string
-}
+  href: string;
+};

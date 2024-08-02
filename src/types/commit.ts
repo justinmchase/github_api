@@ -1,6 +1,6 @@
-import { DateTimeString } from "../mod.ts";
-import { GitHubRepository } from "./repository.ts";
-import { GitHubUser } from "./user.ts";
+import type { DateTimeString } from "./date.ts";
+import type { GitHubRepository } from "./repository.ts";
+import type { GitHubUser } from "./user.ts";
 
 export type GitHubCommit = {
   label: string;
@@ -21,14 +21,14 @@ export type GitHubCommitStatus = {
 };
 
 export type GitHubCommitStatusDetail = {
-  url: string
-  avatar_url: string
-  id: number
-  node_id: string
-  state: "success" | "pending" | "error" | "failure"
-  description: string
-  target_url: string
-  context: string
-  created_at: DateTimeString
-  updated_at: DateTimeString
-}
+  url: string;
+  avatar_url: string;
+  id: number;
+  node_id: string;
+  state: "success" | "pending" | "error" | "failure";
+  description: string;
+  target_url: string;
+  context: string;
+  created_at: DateTimeString;
+  updated_at: DateTimeString;
+};

@@ -1,17 +1,17 @@
-import { GitHubClient } from "../../../../client.ts";
-import {
+import type { GitHubClient } from "../../../../client.ts";
+import type {
   GitHubOrg,
   GitHubRepository,
   GitHubSecret,
-  GitHubSecretVisibility,
 } from "../../../../types/mod.ts";
+import { GitHubSecretVisibility } from "../../../../types/mod.ts";
 
 export async function list(
   opts:
     & { secret: GitHubSecret }
     & GitHubOrg
     & { client: GitHubClient },
-) {
+): Promise<GitHubRepository[]> {
   const { secret, organization, client } = opts;
   if (secret.visibility !== GitHubSecretVisibility.Selected) {
     throw new Error(

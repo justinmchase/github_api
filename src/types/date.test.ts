@@ -1,5 +1,6 @@
 import { testing } from "../../deps/std.ts";
-import { GitHubDate, githubFormatDate } from "./date.ts";
+import type { GitHubDate } from "./date.ts";
+import { githubFormatDate } from "./date.ts";
 
 Deno.test({
   name: "dates",

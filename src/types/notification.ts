@@ -1,5 +1,5 @@
-import { DateTimeString } from "./date.ts";
-import { GitHubRepository } from "./repository.ts";
+import type { DateTimeString } from "./date.ts";
+import type { GitHubRepository } from "./repository.ts";
 
 export enum GitHubNotificationReason {
   ApprovalRequested = "approval_requested", // You were requested to review and approve a deployment. For more information, see "Reviewing deployments."
@@ -30,8 +30,8 @@ export type GitHubNotification = {
   };
   reason: GitHubNotificationReason;
   unread: boolean;
-  updated_at: DateTimeString
-  last_read_at: DateTimeString
+  updated_at: DateTimeString;
+  last_read_at: DateTimeString;
   url: string;
   subscription_url: string;
 };

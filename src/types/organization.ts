@@ -1,4 +1,4 @@
-import { GitHubPermission } from "./permissions.ts";
+import type { GitHubPermission } from "./permissions.ts";
 
 export type GitHubOrganization = {
   type: "Organization";

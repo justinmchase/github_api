@@ -1,5 +1,5 @@
-import { GitHubReactions } from "./reactions.ts";
-import { GitHubUser } from "./user.ts";
+import type { GitHubReactions } from "./reactions.ts";
+import type { GitHubUser } from "./user.ts";
 
 export enum GitHubAuthorAssociation {
   Collaborator = "COLLABORATOR",

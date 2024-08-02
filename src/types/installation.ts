@@ -1,8 +1,8 @@
-import { GitHubEventName } from "./event.ts";
-import { GitHubOrganization } from "./organization.ts";
-import { GitHubInstallationPermissions } from "./permissions.ts";
-import { GitHubRepository } from "./repository.ts";
-import { GitHubUser } from "./user.ts";
+import type { GitHubEventName } from "./event.ts";
+import type { GitHubOrganization } from "./organization.ts";
+import type { GitHubInstallationPermissions } from "./permissions.ts";
+import type { GitHubRepository } from "./repository.ts";
+import type { GitHubUser } from "./user.ts";
 
 export enum GithubInstallationActions {
   Deleted = "deleted",

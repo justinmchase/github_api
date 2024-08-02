@@ -1,17 +1,17 @@
-import { GitHubClient } from "../../../../client.ts";
-import {
+import type { GitHubClient } from "../../../../client.ts";
+import type {
   GitHubOrg,
   GitHubRepository,
   GitHubVariable,
-  GitHubVariableVisibility,
 } from "../../../../types/mod.ts";
+import { GitHubVariableVisibility } from "../../../../types/mod.ts";
 
 export async function list(
   opts:
     & { variable: GitHubVariable }
     & GitHubOrg
     & { client: GitHubClient },
-) {
+): Promise<GitHubRepository[]> {
   const { variable, organization, client } = opts;
   if (variable.visibility !== GitHubVariableVisibility.Selected) {
     throw new Error(

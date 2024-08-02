@@ -1,6 +1,6 @@
-import { DateTimeString } from "./date.ts";
-import { GitHubLicense } from "./license.ts";
-import { GitHubUser } from "./user.ts";
+import type { DateTimeString } from "./date.ts";
+import type { GitHubLicense } from "./license.ts";
+import type { GitHubUser } from "./user.ts";
 
 export enum GitHubRepositoryVisibility {
   Public = "public",

@@ -1,5 +1,5 @@
-import { GitHubClient } from "./client.ts";
-import { GitHubRateLimit } from "./types/mod.ts";
+import type { GitHubClient } from "./client.ts";
+import type { GitHubRateLimit } from "./types/mod.ts";
 
 export async function githubRateLimit(
   opts: { client: GitHubClient },

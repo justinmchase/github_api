@@ -1,9 +1,9 @@
-import { GitHubDeploymentProtectionRuleEvent } from "./deployment.ts";
-import { GitHubInstallationEvent } from "./installation.ts";
-import { GitHubOrganization } from "./organization.ts";
-import { GitHubPingEvent } from "./ping.ts";
-import { GitHubRepository } from "./repository.ts";
-import { GitHubUser } from "./user.ts";
+import type { GitHubDeploymentProtectionRuleEvent } from "./deployment.ts";
+import type { GitHubInstallationEvent } from "./installation.ts";
+import type { GitHubOrganization } from "./organization.ts";
+import type { GitHubPingEvent } from "./ping.ts";
+import type { GitHubRepository } from "./repository.ts";
+import type { GitHubUser } from "./user.ts";
 
 export type GitHubEventName =
   | "branch_protection_rule"

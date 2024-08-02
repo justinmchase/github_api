@@ -1,0 +1,43 @@
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  draft-release:
+    name: Draft Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      resolved_version: ${{ steps.release.outputs.resolved_version }}
+    steps:
+      - id: release
+        uses: release-drafter/release-drafter@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-version:
+    needs: draft-release
+    name: Update Version
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: optum/semver-cli/setup@feature/setup-action
+
+      - name: Set Version
+        run: |
+          semver set ${{ needs.draft-release.outputs.resolved_version }}"
+
+      - name: Push
+        run: |
+          gh auth setup-git
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

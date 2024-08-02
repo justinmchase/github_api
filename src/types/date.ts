@@ -18,7 +18,7 @@ export type GitHubDate =
   | { date: DateString; time: TimeString }
   | { date: DateString; time: TimeString; offset: UtcOffsetString };
 
-export function githubFormatDate(date: GitHubDate) {
+export function githubFormatDate(date: GitHubDate): DateTimeString {
   const d = date as Record<string, string>;
   if (d.time && d.offset) {
     return `${d.date}T${d.time}+${d.offset}`;

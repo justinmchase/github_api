@@ -1,6 +1,6 @@
-import { GitHubApp } from "./app.ts";
-import { GitHubRepository } from "./repository.ts";
-import { GitHubUser } from "./user.ts";
+import type { GitHubApp } from "./app.ts";
+import type { GitHubRepository } from "./repository.ts";
+import type { GitHubUser } from "./user.ts";
 
 // deployment_protection_rule
 export enum GitHubDeploymentProtectionRuleAction {

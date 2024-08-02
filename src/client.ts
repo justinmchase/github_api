@@ -1,5 +1,5 @@
 import { async, log } from "../deps/std.ts";
-import {
+import type {
   GitHubApi,
   GitHubCredentials,
   GitHubRequest,
@@ -69,7 +69,6 @@ export class GitHubClient {
       if (max !== undefined && items.length >= max) {
         break;
       }
-
     } while (Number.isNaN(total) || (page * perPage) < total);
 
     return results;

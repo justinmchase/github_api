@@ -1,6 +1,6 @@
-import { SerializableRecord } from "../../../../../deps/serializable.ts";
-import { GitHubClient } from "../../../../client.ts";
-import { GitHubRepository } from "../../../../types/mod.ts";
+import type { SerializableRecord } from "../../../../../deps/serializable.ts";
+import type { GitHubClient } from "../../../../client.ts";
+import type { GitHubRepository } from "../../../../types/mod.ts";
 
 export async function create(
   opts:
@@ -11,7 +11,7 @@ export async function create(
     }
     & { repository: GitHubRepository }
     & { client: GitHubClient },
-) {
+): Promise<void> {
   const {
     workflowId,
     ref,
@@ -21,7 +21,7 @@ export async function create(
   } = opts;
   const api =
     `repos/${login}/${name}/actions/workflows/${workflowId}/dispatches`;
-  return await client.request<void>({
+  await client.request({
     api,
     method: "POST",
     body: {

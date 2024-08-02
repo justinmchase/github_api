@@ -1,4 +1,4 @@
-import { GitHubEventName } from "./event.ts";
+import type { GitHubEventName } from "./event.ts";
 
 export type GitHubHook = {
   type: "App" | string;

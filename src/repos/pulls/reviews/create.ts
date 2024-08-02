@@ -1,17 +1,19 @@
-import { GitHubClient } from "../../../client.ts";
-import { GitHubRepository } from "../../../mod.ts";
-import { GitHubPullRequest } from "../../../types/pulls.ts";
-import { GitHubReview } from "../../../types/review.ts";
+import type { GitHubClient } from "../../../client.ts";
+import type {
+  GitHubPullRequest,
+  GitHubRepository,
+  GitHubReview,
+} from "../../../types/mod.ts";
 
 type GitHubPullRequestReviewCreateOpts = {
-  event: "APPROVE" | "REQUEST_CHANGES" | "COMMENT"
-  body?: string
+  event: "APPROVE" | "REQUEST_CHANGES" | "COMMENT";
+  body?: string;
   comments?: {
-    path: string
-    position: number
-    body: string
-  }[]
-}
+    path: string;
+    position: number;
+    body: string;
+  }[];
+};
 
 export async function create(
   opts:
@@ -19,7 +21,7 @@ export async function create(
     & { repository: GitHubRepository }
     & { pr: GitHubPullRequest }
     & { client: GitHubClient },
-) {
+): Promise<GitHubReview> {
   const {
     event,
     body = "",
@@ -35,7 +37,7 @@ export async function create(
       commit_id,
       event,
       body,
-      comments
+      comments,
     },
   });
 }

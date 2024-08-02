@@ -21,6 +21,7 @@ export * from "./rate.ts";
 export * from "./reactions.ts";
 export * from "./repository.ts";
 export * from "./request.ts";
+export * from "./review.ts";
 export * from "./team.ts";
 export * from "./types.ts";
 export * from "./user.ts";

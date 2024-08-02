@@ -1,5 +1,5 @@
-import { GitHubClient } from "../client.ts";
-import {
+import type { GitHubClient } from "../client.ts";
+import type {
   GitHubOrder,
   GitHubOrg,
   GitHubRepository,
@@ -30,7 +30,7 @@ export async function repositories(
     & GitHubSearchRepositoriesOpts
     & GitHubOrg
     & { client: GitHubClient },
-) {
+): Promise<GitHubRepository[]> {
   const { q, sort, order, organization, client } = opts;
   const parameters = new URLSearchParams([
     ["q", `${q} org:${organization}`],

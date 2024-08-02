@@ -1,13 +1,12 @@
-import { GitHubClient } from "../../client.ts";
-import { GitHubContent } from "../../types/content.ts";
-import { GitHubRepository } from "../../types/mod.ts";
+import type { GitHubClient } from "../../client.ts";
+import type { GitHubContent, GitHubRepository } from "../../types/mod.ts";
 
 export async function get(
   opts:
     & { path: string }
     & { repository: GitHubRepository }
     & { client: GitHubClient },
-) {
+): Promise<GitHubContent> {
   const {
     path,
     repository: { name, owner: { login } },
