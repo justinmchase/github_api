@@ -34,7 +34,7 @@ jobs:
 
       - name: Set Version
         run: |
-          semver set ${{ needs.draft-release.outputs.resolved_version }}"
+          semver set ${{ needs.draft-release.outputs.resolved_version }}
 
       - name: Push
         run: |
