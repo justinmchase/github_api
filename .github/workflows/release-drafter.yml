@@ -26,18 +26,33 @@ jobs:
   update-version:
     needs: draft-release
     name: Update Version
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: github.ref
       - uses: optum/semver-cli/setup@feature/setup-action
 
       - name: Set Version
         run: |
           semver set ${{ needs.draft-release.outputs.resolved_version }}
+          if [ -z $(git status --porcelain) ];
+          then
+              echo "no changes to commit."
+          else
+            cat >> $GITHUB_STEP_SUMMARY<<EOF
+            # Version
 
-      - name: Push
-        run: |
-          gh auth setup-git
+            \`\`\`
+            ${{ needs.draft-release.outputs.resolved_version }}
+            \`\`\`
+            EOF
+
+            gh auth setup-git
+            git add .
+            git commit -m '${{ needs.draft-release.outputs.resolved_version }}[no ci]'
+            git push origin main
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
