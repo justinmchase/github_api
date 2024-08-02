@@ -44,19 +44,19 @@ jobs:
           if [ -z $(git status --porcelain) ];
           then
               echo "no changes to commit."
-          else
-            cat >> $GITHUB_STEP_SUMMARY<<EOF
-            # Version
-
-            \`\`\`
-            ${{ needs.draft-release.outputs.resolved_version }}
-            \`\`\`
-            EOF
-
-            gh auth setup-git
-            git add .
-            git commit -m '${{ needs.draft-release.outputs.resolved_version }}[no ci]'
-            git push origin main
+              exit 0
           fi
+
+          cat >> $GITHUB_STEP_SUMMARY<<EOF
+          # Version
+          \`\`\`
+          ${{ needs.draft-release.outputs.resolved_version }}
+          \`\`\`
+          EOF
+
+          gh auth setup-git
+          git add .
+          git commit -m '${{ needs.draft-release.outputs.resolved_version }}[no ci]'
+          git push origin main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
