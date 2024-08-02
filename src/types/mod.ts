@@ -1,6 +1,7 @@
 export * from "./account.ts";
 export * from "./api.ts";
 export * from "./app.ts";
+export * from "./checkRun.ts";
 export * from "./comment.ts";
 export * from "./commit.ts";
 export * from "./content.ts";
