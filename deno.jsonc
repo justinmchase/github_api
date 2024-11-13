@@ -13,6 +13,6 @@
     "@std/log": "jsr:@std/log@^0.224.5",
     "@std/testing": "jsr:@std/testing@^0.225.3",
     "@std/encoding": "jsr:@std/encoding@^1.0.5",
-    "@djwt": "https://deno.land/x/djwt@v3.0.2/mod.ts"
+    "@djwt": "jsr:@zaubrik/djwt@^3.0.2"
   }
 }
