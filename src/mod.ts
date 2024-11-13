@@ -1,5 +1,5 @@
 export * from "./client.ts";
-export * from "./application.ts";
+export * from "./credentials.ts";
 export * from "./error.ts";
 export * from "./rate.ts";
 export * from "./types/mod.ts";
