@@ -3,7 +3,7 @@
   "version": "0.5.14",
   "exports": "./mod.ts",
   "tasks": {
-    "check": "deno fmt && deno lint && deno test"
+    "check": "deno fmt && deno lint && deno test && npx jsr publish --dry-run --allow-dirty"
   },
   "imports": {
     "@justinmchase/serializable": "jsr:@justinmchase/serializable@^0.3.7",

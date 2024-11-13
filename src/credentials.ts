@@ -2,11 +2,16 @@ import { create, getNumericDate } from "@djwt";
 import { decodeBase64 } from "@std/encoding/base64";
 import { GitHubClient } from "./client.ts";
 import { app } from "./app/mod.ts";
+import { api } from "./mod.ts";
 
 /**
  * GitHubCredentialProvider is a provider of GitHub credentials.
  */
 export type GitHubCredentialProvider = {
+  /**
+   * check checks if the GitHub credentials are valid.
+   */
+  check(): Promise<void>;
   /**
    * token returns a GitHub Personal Access Token or a GitHub Application JWT.
    */
@@ -57,6 +62,13 @@ export class GitHubPat {
   ) {
   }
 
+  public async check(): Promise<void> {
+    const client = new GitHubClient({
+      accessToken: this.pat,
+    });
+    await api.user.get({ client });
+  }
+
   public async token(): Promise<string> {
     return await this.pat;
   }
@@ -84,6 +96,14 @@ export class GitHubApplication {
       .replace(/-----[A-Z ]*-----/g, "")
       .replace(/\s+/g, "");
     return decodeBase64(base64);
+  }
+
+  public async check(): Promise<void> {
+    const accessToken = await this.token();
+    const client = new GitHubClient({
+      accessToken,
+    });
+    await api.app.get({ client });
   }
 
   public async token(): Promise<string> {
