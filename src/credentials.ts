@@ -1,12 +1,22 @@
 import { create, getNumericDate } from "@djwt";
 import { decodeBase64 } from "@std/encoding/base64";
+import { GitHubClient } from "./client.ts";
+import { app } from "./app/mod.ts";
 
 /**
  * GitHubCredentialProvider is a provider of GitHub credentials.
  */
 export type GitHubCredentialProvider = {
+  /**
+   * token returns a GitHub Personal Access Token or a GitHub Application JWT.
+   */
   token(): Promise<string>;
-}
+  /**
+   * installationToken returns a GitHub App installation token or a GitHub Personal Access Token.
+   * @param installationId The installation ID.
+   */
+  installationToken(installationId: number): Promise<string>;
+};
 
 /**
  * GitHubCredentialConfig is the configuration for GitHub credentials.
@@ -15,21 +25,25 @@ type GitHubCredentialConfig = {
   githubAppId?: number;
   githubPrivateKey?: string;
   githubPat?: string;
-}
+};
 
 /**
  * credentials creates a new GitHubCredentialProvider.
  * @param config The configuration for the GitHub credentials.
  */
-export function credentials(config: GitHubCredentialConfig): GitHubCredentialProvider {
-  if (config.githubPat)
-    return new GitHubPat(config.githubPat)
+export function credentials(
+  config: GitHubCredentialConfig,
+): GitHubCredentialProvider {
+  if (config.githubPat) {
+    return new GitHubPat(config.githubPat);
+  }
 
-  if (config.githubAppId && config.githubPrivateKey)
+  if (config.githubAppId && config.githubPrivateKey) {
     return new GitHubApplication(
       config.githubAppId,
       config.githubPrivateKey,
     );
+  }
 
   throw new Error("githubPat or githubAppId and githubPrivateKey required");
 }
@@ -44,6 +58,10 @@ export class GitHubPat {
   }
 
   public async token(): Promise<string> {
+    return await this.pat;
+  }
+
+  public async installationToken(_: number): Promise<string> {
     return await this.pat;
   }
 }
@@ -91,5 +109,17 @@ export class GitHubApplication {
       },
       this.key,
     );
+  }
+
+  public async installationToken(installationId: number): Promise<string> {
+    const accessToken = await this.token();
+    const client = new GitHubClient({
+      accessToken,
+    });
+    const { token } = await app.installations.accessTokens({
+      installationId,
+      client,
+    });
+    return token;
   }
 }
