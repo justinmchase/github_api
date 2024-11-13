@@ -3,11 +3,13 @@
   "specifiers": {
     "jsr:@justinmchase/serializable@~0.3.7": "0.3.8",
     "jsr:@justinmchase/type@~0.2.3": "0.2.3",
+    "jsr:@std/assert@^1.0.1": "1.0.7",
     "jsr:@std/async@^1.0.1": "1.0.8",
     "jsr:@std/encoding@0.224.0": "0.224.0",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@^1.0.2": "1.0.3",
     "jsr:@std/fs@^1.0.4": "1.0.5",
+    "jsr:@std/internal@^1.0.5": "1.0.5",
     "jsr:@std/io@0.225": "0.225.0",
     "jsr:@std/log@~0.224.5": "0.224.9",
     "jsr:@zaubrik/djwt@^3.0.2": "3.0.2"
@@ -21,6 +23,12 @@
     },
     "@justinmchase/type@0.2.3": {
       "integrity": "bb516f56c9860752f25d43c0e61709980405c36b6ef227317eca4e0f7509dc5e"
+    },
+    "@std/assert@1.0.7": {
+      "integrity": "64ce9fac879e0b9f3042a89b3c3f8ccfc9c984391af19e2087513a79d73e28c3",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
     },
     "@std/async@1.0.8": {
       "integrity": "c057c5211a0f1d12e7dcd111ab430091301b8d64b4250052a79d277383bc3ba7"
@@ -36,6 +44,9 @@
     },
     "@std/fs@1.0.5": {
       "integrity": "41806ad6823d0b5f275f9849a2640d87e4ef67c51ee1b8fb02426f55e02fd44e"
+    },
+    "@std/internal@1.0.5": {
+      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
     },
     "@std/io@0.225.0": {
       "integrity": "c1db7c5e5a231629b32d64b9a53139445b2ca640d828c26bf23e1c55f8c079b3"
