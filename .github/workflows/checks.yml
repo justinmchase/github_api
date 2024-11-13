@@ -27,3 +27,6 @@ jobs:
 
       - name: Coverage Report
         run: deno coverage cov_profile >> $GITHUB_STEP_SUMMARY
+
+      - name: Check Jsr Readiness
+        run: npx jsr publish --dry-run
