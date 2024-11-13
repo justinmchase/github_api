@@ -1,4 +1,5 @@
 export * from "./client.ts";
+export * from "./app.ts";
 export * from "./error.ts";
 export * from "./rate.ts";
 export * from "./types/mod.ts";

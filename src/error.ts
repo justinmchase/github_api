@@ -1,4 +1,4 @@
-import type { Serializable } from "@justinmchase/serializable";
+import type { Serializable } from "jsr:@justinmchase/serializable";
 
 export class GitHubApiError extends Error {
   constructor(
