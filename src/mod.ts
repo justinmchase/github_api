@@ -9,10 +9,12 @@ import { orgs } from "./orgs/mod.ts";
 import { repos } from "./repos/mod.ts";
 import { search } from "./search/mod.ts";
 import { notifications } from "./notifications/mod.ts";
+import { user } from "./user/mod.ts";
 export const api = {
   app,
   orgs,
   repos,
   search,
   notifications,
+  user,
 };
