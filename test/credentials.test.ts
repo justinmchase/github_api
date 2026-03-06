@@ -1,0 +1,72 @@
+import { assert, assertEquals } from "@std/assert";
+import { credentials } from "../mod.ts";
+
+const WEBHOOK_SECRET = "899ee4e876fc4fcc93995f41aea659f6";
+const TEST_PEM = `-----BEGIN RSA PRIVATE KEY-----
+MIIEpQIBAAKCAQEAzP0WtSIIvdz0TaNbKL47VfZDy4vdj7uxkACHzqAn9FwhEYst
+RGjaWrYJLCzIZstvyYmosBXcK4JNTyki21ayEXGzPF4G0HfRyNwGrOYwVPFcxgYB
+mAMtFkRXxHX62vXvy+g2HWlIg78HUWEElb4JoHDv2MpgKf5Q3zwff19qDgXW7oXj
+Xpgnu+W4QNW91Kl0Jrm2HUAqaz+rgwAUncbQfcIKi/F5DWmlcEuMAqfbTKaSoPX1
+wCRcGPxOTtxlQgHDeunE9rk/zjaeegAI+K6SoeislmITUL9U7c4YKkHFiweoHCFm
+DOidrjLtmCj67XK8DFl0qcYQ6BqiI5hE2qTC8QIDAQABAoIBAQC4LREw74JRLGvo
+McSe58SiKKCjCmioUqhnzMI4eRdM61Xe0GB8nYTKidHV+eqYyWIH/wIsK4flI67Y
+WAp0bgGRwMmcjJKszWsUf/QTdsKoHzAOz6iw7vGclw0QfDxGbT/lwh6U8Fpx3Lnz
+eSrIa7V0jORCsRoTwObim79lDtJYA3WCT6FJ4/r9N0LsQfi4j+vaVkrmENYjogVW
+SiE1IFmm1IHUTc70R3aBHht/+8iSltG1gATApFTj582uR8Ye+AuGURlp07w9SmRR
+cCB0MtoIf+CHm86Abf2ZsKEybwxNS3z9oYEKoMOEbTKHjQoM8iVA/QRuEfZvpwEI
+kb13BO/BAoGBAOW9aP1a7/PCL1lDPNKcNsftmRrBQX/sLAlg46sMJyQ8huJ9H8Di
+HUsfqJJVq/J8T0JSa1O5aPoE/dxKe0kTCfBuuH2mN8IWoG0Xl7P4hONhIPeovCYt
+GxbKD/1YG7J5DlzGpGOSgCQo7as9r1C1c/0UB1/xtZk9CpnMW3bNHN9JAoGBAORr
+aeV0nYadJX2qQRR1pXkC9/gCdP+KzS43T+3op+8tPFqCIMH7NkE+gkCmZE5Yno+a
+KR1zsPbE/Zc4HSWHEBcwvpOvUDpj2ECKeAKNHpn94kd4jXqxHWW1ZAS/cbuPZPhc
+ANN9GaFYBH9Z9bMP06SYyzvbEum3XC6nWhBqbb5pAoGBAJigPCbNCkqjwDcKD1dQ
+BqjN9YAr0ar9qMfWQYo6Oaq+N1IylCzdS17EOoZ1OhWPdkx2Wu01aUNom4qFROBo
+MJs1w4VeLv7Xb17qZJNg0FALEA7YX57xKmT6eqLxrPzlpaAHK+Emy9C6DCNOiLES
+y2rfqoKYHvAd+HPyqvUDEWJZAoGAd842/tjJfr+R2HWiKN8D6ZK7COQRBa+Bqsns
+LHapDnQFgdta3yOp81Kb8tjTJ5ynnd5XzlDN8sCj2drevr42nFM+witjwxx3YnK+
+O2hVMqPNOXtriXy4VI5tZWgceSne5b0r2cF13gBSa5F9o2ubsGtLvZtMMjWwLfAs
+9ws7gHECgYEAs/tWIe7ZguYIXSPsjQRrQMr1qJ8eLkachImZSAZuwA6yN88BQZC+
+VUXmFC5h9pHRvkcHsbQXNylv8qKMgtzd1mnxPDL8ZaCW1MPo1gYUNnRxaop949an
+iw9o0sHtczGCxYLzebC46GdFmzkSvUgOhiIOj1pNUFHemXb33HzNfqY=
+-----END RSA PRIVATE KEY-----`;
+
+function decodeJwtJson(segment: string): Record<string, unknown> {
+  const normalized = segment.replace(/-/g, "+").replace(/_/g, "/");
+  const padding = "=".repeat((4 - (normalized.length % 4)) % 4);
+  return JSON.parse(atob(`${normalized}${padding}`));
+}
+
+Deno.test("credentials PAT token returns source token", async () => {
+  const provider = credentials({ githubPat: WEBHOOK_SECRET });
+  const token = await provider.token();
+
+  assertEquals(token, WEBHOOK_SECRET);
+});
+
+Deno.test({
+  name: "credentials app token loads RSA PEM and creates JWT",
+  fn: async () => {
+    const appId = 12345;
+    const provider = credentials({
+      githubAppId: appId,
+      githubPrivateKey: TEST_PEM,
+    });
+
+    const token = await provider.token();
+    const parts = token.split(".");
+    assertEquals(parts.length, 3);
+
+    const header = decodeJwtJson(parts[0]);
+    const payload = decodeJwtJson(parts[1]);
+
+    assertEquals(header.alg, "RS256");
+    assertEquals(header.typ, "JWT");
+    assertEquals(payload.iss, `${appId}`);
+
+    const iat = payload.iat;
+    const exp = payload.exp;
+    assert(typeof iat === "number");
+    assert(typeof exp === "number");
+    assert(exp > iat);
+  },
+});

@@ -1,5 +1,6 @@
 import { create, getNumericDate } from "@djwt";
 import { decodeBase64 } from "@std/encoding/base64";
+import { createPrivateKey } from "node:crypto";
 import { GitHubClient } from "./client.ts";
 import { app } from "./app/mod.ts";
 import { api } from "./mod.ts";
@@ -82,7 +83,7 @@ export class GitHubPat {
  * GitHubApplication is a GitHub Application credential provider
  */
 export class GitHubApplication {
-  private readonly decodedPrivateKey: Uint8Array;
+  private readonly decodedPrivateKey: Uint8Array<ArrayBuffer>;
   private key: CryptoKey | null = null;
   constructor(
     private readonly appId: number,
@@ -91,10 +92,20 @@ export class GitHubApplication {
     this.decodedPrivateKey = GitHubApplication.pemToBinary(this.pks8PrivateKey);
   }
 
-  private static pemToBinary(pem: string): Uint8Array {
+  private static pemToBinary(pem: string): Uint8Array<ArrayBuffer> {
+    // GitHub App keys are often PKCS#1 (BEGIN RSA PRIVATE KEY); convert to PKCS#8 for WebCrypto.
+    if (pem.includes("BEGIN RSA PRIVATE KEY")) {
+      const keyObject = createPrivateKey({ key: pem, format: "pem" });
+      const der = keyObject.export({ format: "der", type: "pkcs8" });
+      const bytes = new Uint8Array(der.byteLength);
+      bytes.set(der);
+      return bytes;
+    }
+
     const base64 = pem
       .replace(/-----[A-Z ]*-----/g, "")
       .replace(/\s+/g, "");
+
     return decodeBase64(base64);
   }
 
