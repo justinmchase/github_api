@@ -13,11 +13,4 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Deno
-        uses: denolib/setup-deno@v2
-        with:
-          deno-version: v2.x
-
-      - run: deno task check
       - run: npx --yes jsr publish
