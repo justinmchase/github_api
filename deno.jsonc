@@ -1,6 +1,6 @@
 {
   "name": "@justinmchase/github-api",
-  "version": "0.5.14",
+  "version": "0.5.15",
   "exports": "./mod.ts",
   "publish": {
     "exclude": [
